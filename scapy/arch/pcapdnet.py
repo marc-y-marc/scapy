@@ -187,7 +187,7 @@ if conf.use_pcap:
     class _PcapWrapper_winpcap:  # noqa: F811
         """Wrapper for the WinPcap calls"""
 
-        def __init__(self, device, snaplen, to_ms, monitor=None):
+        def __init__(self, device, snaplen, promisc, to_ms, monitor=None):
             self.errbuf = create_string_buffer(PCAP_ERRBUF_SIZE)
             self.iface = create_string_buffer(device.encode("utf8"))
             if monitor:
@@ -196,16 +196,15 @@ if conf.use_pcap:
                 # Npcap-only functions
                 from scapy.modules.winpcapy import pcap_create, \
                     pcap_set_snaplen, pcap_set_promisc, \
-                    pcap_set_timeout, pcap_set_rfmon, pcap_activate, pcap_statustostr
+                    pcap_set_timeout, pcap_set_rfmon, pcap_activate
                 self.pcap = pcap_create(self.iface, self.errbuf)
                 pcap_set_snaplen(self.pcap, snaplen)
                 pcap_set_promisc(self.pcap, 0)
-                pcap_set_rfmon(self.pcap, 0)
                 pcap_set_timeout(self.pcap, to_ms)
-                activate = pcap_activate(self.pcap)
-                if activate != 0:
-                    errorStr = pcap_statustostr(activate)
-                    raise OSError("Could not activate the pcap handler, error: \n" + str(errorStr))
+                #if pcap_set_rfmon(self.pcap, 1) != 0:
+                #    warning("Could not set monitor mode")
+                if pcap_activate(self.pcap) != 0:
+                    raise OSError("Could not activate the pcap handler")
             else:
                 self.pcap = pcap_open_live(self.iface,
                                            snaplen, promisc, to_ms,
