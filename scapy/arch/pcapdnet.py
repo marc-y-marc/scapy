@@ -205,7 +205,6 @@ if conf.use_pcap:
                     warning("Could not set monitor mode")
                 activate = pcap_activate(self.pcap)
                 print("The value of activate is: " + str(activate))
-                print(*activate, sep='\n')
                 if activate != 0:
                     errorStr = pcap_statustostr(activate)
                     raise OSError("Could not activate the pcap handler, error:" + errorStr)
