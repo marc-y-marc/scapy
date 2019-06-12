@@ -207,7 +207,7 @@ if conf.use_pcap:
                 print("The value of activate is: " + str(activate))
                 if activate != 0:
                     errorStr = pcap_statustostr(activate)
-                    raise OSError("Could not activate the pcap handler, error:" + errorStr)
+                    raise OSError("Could not activate the pcap handler, error:" + str(errorStr)
             else:
                 self.pcap = pcap_open_live(self.iface,
                                            snaplen, promisc, to_ms,
