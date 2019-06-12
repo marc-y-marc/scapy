@@ -317,7 +317,7 @@ try:  # NPCAP ONLY function
     pcap_activate.argtypes = [POINTER(pcap_t)]
 
     pcap_statustostr = _lib.pcap_statustostr
-    pcap_statustostre = c_wchar_p
+    pcap_statustostr = c_wchar_p
     pcap_statustostr = [POINTER(c_int)]
 except AttributeError:
     pass
