@@ -204,7 +204,8 @@ if conf.use_pcap:
                 if pcap_set_rfmon(self.pcap, 1) != 0:
                     warning("Could not set monitor mode")
                 if pcap_activate(self.pcap) != 0:
-                    raise OSError("Could not activate the pcap handler")
+                    pcap_statustostr = pcap_statustostr(pcap_activate(self.pcap))
+                    raise OSError("Could not activate the pcap handler, error:" + pcap_statustostr)
             else:
                 self.pcap = pcap_open_live(self.iface,
                                            snaplen, promisc, to_ms,
