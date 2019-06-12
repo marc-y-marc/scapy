@@ -199,16 +199,14 @@ if conf.use_pcap:
                     pcap_set_timeout, pcap_set_rfmon, pcap_activate, pcap_statustostr
                 self.pcap = pcap_create(self.iface, self.errbuf)
                 pcap_set_snaplen(self.pcap, snaplen)
-                #prom = pcap_set_promisc(self.pcap, promisc)
-                print("The value of promisc is: " + str(self.pcap))
+                pcap_set_promisc(self.pcap, 0)
                 pcap_set_timeout(self.pcap, to_ms)
                 if pcap_set_rfmon(self.pcap, 1) != 0:
                     warning("Could not set monitor mode")
                 activate = pcap_activate(self.pcap)
-                print("The value of activate is: " + str(activate))
                 if activate != 0:
                     errorStr = pcap_statustostr(activate)
-                    raise OSError("Could not activate the pcap handler, error:" + str(errorStr))
+                    raise OSError("Could not activate the pcap handler, error: \n" + str(errorStr))
             else:
                 self.pcap = pcap_open_live(self.iface,
                                            snaplen, promisc, to_ms,
