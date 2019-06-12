@@ -200,6 +200,7 @@ if conf.use_pcap:
                 self.pcap = pcap_create(self.iface, self.errbuf)
                 pcap_set_snaplen(self.pcap, snaplen)
                 pcap_set_promisc(self.pcap, promisc)
+                print("The value of promisc is: " + str(self.pcap, promisc))
                 pcap_set_timeout(self.pcap, to_ms)
                 if pcap_set_rfmon(self.pcap, 1) != 0:
                     warning("Could not set monitor mode")
