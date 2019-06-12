@@ -308,7 +308,7 @@ try:  # NPCAP ONLY function
     #   set the packet buffer timeout for a not-yet-activated capture handle
     pcap_set_timeout = _lib.pcap_set_timeout
     pcap_set_timeout.restype = c_int
-    pcap_set_timeout.argtypes = [POINTER(pcap_t), c_int]
+    pcap_set_timeout.argtypes = [POINTER(pcap_t), c_]
 
     #int pcap_activate(pcap_t *p)
     #   activate a capture handle
@@ -317,7 +317,7 @@ try:  # NPCAP ONLY function
     pcap_activate.argtypes = [POINTER(pcap_t)]
 
     pcap_statustostr = _lib.pcap_statustostr
-    pcap_statustostr.restype = c_wchar_p
+    pcap_statustostr.restype = STRING
     pcap_statustostr.argtypes = [c_int]
 except AttributeError:
     pass
