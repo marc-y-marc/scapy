@@ -308,7 +308,7 @@ try:  # NPCAP ONLY function
     #   set the packet buffer timeout for a not-yet-activated capture handle
     pcap_set_timeout = _lib.pcap_set_timeout
     pcap_set_timeout.restype = c_int
-    pcap_set_timeout.argtypes = [POINTER(pcap_t), c_]
+    pcap_set_timeout.argtypes = [POINTER(pcap_t), c_int]
 
     #int pcap_activate(pcap_t *p)
     #   activate a capture handle
