@@ -192,6 +192,7 @@ if conf.use_pcap:
             self.iface = create_string_buffer(device.encode("utf8"))
             self.pcap = pcap_open_live(self.iface, snaplen, promisc, to_ms, \
                                         self.errbuf)
+            self.send()
 
             if WINDOWS:
                 # Winpcap/Npcap exclusive: make every packet to be instantly
