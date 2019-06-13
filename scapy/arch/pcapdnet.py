@@ -199,11 +199,10 @@ if conf.use_pcap:
                     pcap_set_timeout, pcap_set_rfmon, pcap_activate
                 self.pcap = pcap_create(self.iface, self.errbuf)
                 pcap_set_snaplen(self.pcap, snaplen)
-                pcap_set_promisc(self.pcap, 0)
+                #pcap_set_promisc(self.pcap, promisc)
                 pcap_set_timeout(self.pcap, to_ms)
-                pcap_set_rfmon(self.pcap, 0)
-                #if pcap_set_rfmon(self.pcap, 1) != 0:
-                #    warning("Could not set monitor mode")
+                if pcap_set_rfmon(self.pcap, 1) != 0:
+                    warning("Could not set monitor mode")
                 if pcap_activate(self.pcap) != 0:
                     raise OSError("Could not activate the pcap handler")
             else:
