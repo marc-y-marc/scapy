@@ -202,7 +202,7 @@ if conf.use_pcap:
                 pcap_set_snaplen(self.pcap, snaplen)
                 pcap_set_promisc(self.pcap, promisc)
                 pcap_set_timeout(self.pcap, to_ms)
-                if pcap_set_rfmon(self.pcap, 1) != 0:
+                if pcap_set_rfmon(self.pcap, 0) != 0:
                     warning("Could not set monitor mode")
                 if pcap_activate(self.pcap) != 0:
                     res = pcap_activate(self.pcap)
