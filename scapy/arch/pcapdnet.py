@@ -190,9 +190,30 @@ if conf.use_pcap:
         def __init__(self, device, snaplen, promisc, to_ms, monitor=None):
             self.errbuf = create_string_buffer(PCAP_ERRBUF_SIZE)
             self.iface = create_string_buffer(device.encode("utf8"))
-            self.pcap = pcap_open_live(self.iface, snaplen, promisc, to_ms, \
-                                        self.errbuf)
-            self.send()
+            if monitor:
+                if WINDOWS and not conf.use_npcap:
+                    raise OSError("On Windows, this feature requires NPcap !")
+                # Npcap-only functions
+                from scapy.modules.winpcapy import pcap_create, \
+                    pcap_set_snaplen, pcap_set_promisc, \
+                    pcap_set_timeout, pcap_set_rfmon, pcap_activate, \
+                    pcap_statustostr, pcap_strerror
+                self.pcap = pcap_create(self.iface, self.errbuf)
+                #pcap_set_snaplen(self.pcap, snaplen)
+                #pcap_set_promisc(self.pcap, promisc)
+                pcap_set_timeout(self.pcap, to_ms)
+                #if pcap_set_rfmon(self.pcap, 0) != 0:
+                #    warning("Could not set monitor mode")
+                if pcap_activate(self.pcap) != 0:
+                    res = pcap_activate(self.pcap)
+                    print("The result of pcap_activate: " + str(res))
+                    print("This means: " + str(pcap_statustostr(res)))
+                    print("This also means: " + str(pcap_strerror(res)))
+                    raise OSError("Could not activate the pcap handler")
+            else:
+                self.pcap = pcap_open_live(self.iface,
+                                           snaplen, promisc, to_ms,
+                                           self.errbuf)
 
             if WINDOWS:
                 # Winpcap/Npcap exclusive: make every packet to be instantly
