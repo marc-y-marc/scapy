@@ -202,7 +202,11 @@ if conf.use_pcap:
                 pcap_set_snaplen(self.pcap, snaplen)
                 pcap_set_promisc(self.pcap, promisc)
                 pcap_set_timeout(self.pcap, to_ms)
-                if pcap_set_rfmon(self.pcap, 1) != 0:
+                # pcap_set_rfmon() sets whether monitor mode should be set on a capture handle 
+                # when the handle is activated. If rfmon is non-zero, monitor mode will be set, 
+                # otherwise it will not be set
+                # pcap_set_rfmon() returns 0 on success
+                if pcap_set_rfmon(self.pcap, 0) != 0:
                     res = pcap_set_rfmon(self.pcap, 1)
                     print("The result of pcap_set_rfmon: " + str(res))
                     print("This means: " + str(pcap_statustostr(res)))
