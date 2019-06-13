@@ -207,8 +207,8 @@ if conf.use_pcap:
                 if pcap_activate(self.pcap) != 0:
                     res = pcap_activate(self.pcap)
                     print("The result of pcap_activate: " + str(res))
-                    print("This means: " + pcap_statustostr(res))
-                    print("This also means: " + pcap_strerror(res))
+                    print("This means: " + str(pcap_statustostr(res)))
+                    print("This also means: " + str(pcap_strerror(res)))
                     raise OSError("Could not activate the pcap handler")
             else:
                 self.pcap = pcap_open_live(self.iface,
