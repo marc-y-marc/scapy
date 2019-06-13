@@ -199,7 +199,7 @@ if conf.use_pcap:
                     pcap_set_timeout, pcap_set_rfmon, pcap_activate, \
                     pcap_statustostr, pcap_strerror
                 self.pcap = pcap_create(self.iface, self.errbuf)
-                #pcap_set_snaplen(self.pcap, snaplen)
+                pcap_set_snaplen(self.pcap, snaplen)
                 #pcap_set_promisc(self.pcap, promisc)
                 pcap_set_timeout(self.pcap, to_ms)
                 #if pcap_set_rfmon(self.pcap, 0) != 0:
