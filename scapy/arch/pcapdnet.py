@@ -196,7 +196,8 @@ if conf.use_pcap:
                 # Npcap-only functions
                 from scapy.modules.winpcapy import pcap_create, \
                     pcap_set_snaplen, pcap_set_promisc, \
-                    pcap_set_timeout, pcap_set_rfmon, pcap_activate
+                    pcap_set_timeout, pcap_set_rfmon, pcap_activate, \
+                    pcap_statustostr, pcap_strerror
                 self.pcap = pcap_create(self.iface, self.errbuf)
                 pcap_set_snaplen(self.pcap, snaplen)
                 pcap_set_promisc(self.pcap, promisc)
@@ -207,6 +208,7 @@ if conf.use_pcap:
                     res = pcap_activate(self.pcap)
                     print("The result of pcap_activate: " + str(res))
                     print("This means: " + pcap_statustostr(res))
+                    print("This also means: " + pcap_strerror(res))
                     raise OSError("Could not activate the pcap handler")
             else:
                 self.pcap = pcap_open_live(self.iface,
