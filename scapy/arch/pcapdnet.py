@@ -202,8 +202,12 @@ if conf.use_pcap:
                 pcap_set_snaplen(self.pcap, snaplen)
                 pcap_set_promisc(self.pcap, promisc)
                 pcap_set_timeout(self.pcap, to_ms)
-                #if pcap_set_rfmon(self.pcap, 0) != 0:
-                #    warning("Could not set monitor mode")
+                if pcap_set_rfmon(self.pcap, 1) != 0:
+                    res = pcap_set_rfmon(self.pcap, 1)
+                    print("The result of pcap_set_rfmon: " + str(res))
+                    print("This means: " + str(pcap_statustostr(res)))
+                    print("This also means: " + str(pcap_strerror(res)))
+                    raise OSError("Could not activate the rfmon")
                 if pcap_activate(self.pcap) != 0:
                     res = pcap_activate(self.pcap)
                     print("The result of pcap_activate: " + str(res))
